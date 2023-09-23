@@ -3,27 +3,26 @@
 import { Star } from "lucide-react";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useState } from "react";
+import { useEffect } from "react";
+import { useFavoritos } from "@/hooks/useFavoritos";
 
 export default function CardFilme({ filme }) {
   const { titulo, nota, poster } = filme;
-  const [favorito, setFavorito] = useState()
+  const { favorito, favoritar, carregarFavoritos } = useFavoritos(filme)
 
-  function favoritar() {
-    setFavorito(!favorito)
-  }
+  useEffect(carregarFavoritos, [])
 
   return (
     <div className="flex flex-col items-center w-40 relative">
       {favorito ?
         <FavoriteIcon
-          className="text-rose-600 absolute right-1 top-1 cursor-pointer" 
+          className="text-rose-600 absolute right-1 top-1 cursor-pointer"
           onClick={favoritar}
         /> :
-        <FavoriteBorderIcon 
+        <FavoriteBorderIcon
           className="absolute right-1 top-1 cursor-pointer"
           onClick={favoritar}
-          />
+        />
       }
       <img className="rounded" src={poster} alt="poster do filme" />
       <span className="text-center line-clamp-1">
